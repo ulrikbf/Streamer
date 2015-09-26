@@ -1,0 +1,135 @@
+var fs = require('fs');
+var url = require('url');
+var path = require('path');
+var jade = require('jade');
+var exec = require('child_process').exec;
+//var mongojs = require('mongojs');
+//var uri = "mongodb://farmen91:Glenn123#@ds045622.mongolab.com:45622/demo_database", db = mongojs.connect(uri,["demo_collection"]);
+
+/* <======= Lib stuff ========> */
+var urlParser = require('./lib/url_parser.js');
+
+var assert = require('assert');
+var MongoClient = require('mongodb').MongoClient;
+var mongoose = require('mongoose');
+
+function getPublic(res,fullPath){
+    var file =  fs.createReadStream(fullPath);
+    res.writeHead(200,{'Content-type' : 'text/html'});
+    file.pipe(res);
+}
+function getJavascript(res){
+    console.log("Requesting the javascript");
+    var javacsriptPath = "./public/javascript/ajax.js";
+    var script = fs.createReadStream(javacsriptPath);
+    res.writeHead(200,{'Content-type' : 'text/html'});
+    script.pipe(res);
+}
+function getIndex(res){ 
+    
+    var options = {
+        pretty : true,
+        cache : true
+    };
+    
+    var path = "./view/index2.html";
+    var file = fs.createReadStream(path) 
+    file.pipe(res);
+         
+}
+function getAjax(res, req, parts){
+    
+        res.writeHead(200, {
+         'Content-Type': 'text/html',
+         'Access-Control-Allow-Origin' : '*'
+        });
+
+        
+        if(parts != undefined){
+            res.write("this is intext, baby!" + parts.link);
+            var parser = new urlParser(parts.link);
+
+            parser.on('parsed', function(data){
+
+                var stuff = exec(data.exec + data.url);
+                console.log("Complete: " + data.exec + data.url);
+
+                stuff.stderr.on('data',function(error){
+                console.log(error);
+                });
+
+                stuff.on('close',function(code){
+                    console.log("This is the closing code! " + code);
+                });
+            });
+        }
+    res.end("Hello WORLD!");
+}
+
+/* The various files from the categories */
+function getMovies(res){ 
+var path = "./public/videos/test.mp4";
+var file = fs.createReadStream(path);
+    res.writeHead(200,{'Content-type' : 'text/html'});
+    file.pipe(res);
+}
+function getResource(res, req, parts){
+    var path = './public/resources/' + parts.link;
+
+    res.writeHead(200, {
+    'Content-Type': 'text/html',
+    'Access-Control-Allow-Origin' : '*'
+    });
+
+    mongoose.connect('mongodb://192.168.1.215/resources');
+
+    find('podcasts', {type: 'mp4'},function(err,docs){
+	console.log(err);
+	console.log("er inne");
+	console.log(docs);
+
+    });
+var url = 'mongodb://192.168.1.215:27017/resources';
+MongoClient.connect(url, function(err, db) {
+  assert.equal(null, err);
+    console.log("Connected correctly to server.");
+
+    var col = db.collection('podcasts');
+
+     col.findOne({ type :'mp4'}, function(err, item) {
+      assert.equal(null, err);
+	 console.log(item.type);
+
+	 db.close();
+	 var results = JSON.stringify(item);
+	 res.write(results);
+	 db.close();
+	 res.end();
+	});
+     });
+}
+
+function getSeries(res){ 
+var path = "./public/videos/test.mp4";
+var file = fs.createReadStream(path);
+    res.writeHead(200,{'Content-type' : 'video/mp4'});
+    file.pipe(res);
+}
+function getEducational(res){ 
+var path = "./public/videos/test.mp4";
+var file = fs.createReadStream(path);
+    res.writeHead(200,{'Content-type' : 'video/mp4'});
+    file.pipe(res);
+
+}
+function find (collec, query, callback) {
+    mongoose.connection.db.collection(collec, function (err, collection) {
+    collection.find(query).toArray(callback);
+    });
+}
+
+exports.index = getIndex;
+exports.video = getMovies;
+exports.ajax = getAjax;
+exports.public = getPublic;
+exports.getResource = getResource;

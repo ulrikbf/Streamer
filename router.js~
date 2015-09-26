@@ -1,0 +1,42 @@
+var fs = require('fs');
+var requestHandlers = require('./streamer.js');
+var path = require('path');
+var url = require('url');
+
+var handle = {};
+handle['/'] = requestHandlers.index;
+handle['/streaming'] = requestHandlers.video;
+handle['/ajax'] = requestHandlers.ajax;
+/*<================****===============> */
+handle['public'] = requestHandlers.public;
+
+var router = function(res, req){
+var url_parts = url.parse(req.url,true);
+var parts = url_parts.query;
+
+console.log("requestin: " + url_parts.pathname);
+console.log("Data: " + parts.intext);
+    try {
+       
+        if (typeof handle[url_parts.pathname] === 'function') {
+            handle[url_parts.pathname](res,req,parts);
+
+         }else{
+            var dirname = path.dirname(decodeURI(req.url));
+            var basename = path.basename(decodeURI(req.url));
+            var fullPath = path.resolve(dirname,basename);
+            fullPath = "." + fullPath; 
+            console.log(fullPath);
+            
+            handle['public'](res, fullPath);
+         }           
+    }
+        catch(err) {
+            
+            console.log(err);
+        }
+
+}
+
+exports.router = router
+

@@ -1,0 +1,142 @@
+body{
+    margin: 0;
+    font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 15px;
+    line-height: 20px;
+    color: #586e75;
+    background-color: #fdf6e3;
+}
+ul {
+    padding:0;
+    list-style-type: none;
+}
+/* Tags */
+
+
+
+/* Classes */
+
+.sidebar {
+    width: 290px;
+    background: #eee8d5;
+    position: fixed;
+    height: 100%;
+    top: 0;
+}
+.title{
+    font-size: 38px;
+    font-weight: normal;
+    text-align: center;
+    line-height: 64px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.categories {
+    margin: 0;
+    margin-top: 35px;
+    text-align:center;
+}
+.category{
+    list-style-type: none;
+    line-height: 50px;
+    padding: 0;
+    margin-bottom: 1px;
+    border-left: 10px solid;
+    border-radius: 0;
+    font-size: 18px;
+}
+
+.icons {
+    color: rgba(88,110,117,0.8);
+    font-size: 18px;
+    width: 60px;
+    text-align: center;
+}
+.movies {
+    border-left-color: #dc322f;
+    
+}
+.series {
+    border-left-color: #268bd2;
+    
+}
+.educational {
+    border-left-color: #859900;
+    
+}
+.podcasts {
+    border-left-color: #6c71c4;
+    
+}
+.ebooks {
+    border-left-color: #b58900;
+    
+}
+.content{
+    margin-top: 10px;
+    margin-left:340px;
+}
+.search-container {
+    font-size: 40px;
+    height: 64px;
+    margin-top: 8px;
+    position: relative;
+}
+.search {
+
+    box-sizing: border-box;
+    width: 100%;
+    padding-bottom: 0;
+    margin-top: 7px;
+    margin-left: 0;
+    height: 50px;
+    line-height: 44px;
+    border-radius: 0;
+    border: none;
+    background-color: rgba(255,255,255,0.9);
+    font-size: 30px;
+    font-weight: 300;
+    opacity: 0.6;
+
+    webkit-box-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    -moz-box-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+
+}
+.below-search-container {
+    margin-top: 5px;
+    margin-bottom: 25px;
+    font-size: 14px;
+    color: #93a1a1
+}
+.content-list-container {
+    position: relative;
+    min-height: 600px;
+}
+.content-list {
+    padding: 0;
+}
+.list {
+    position: relative;
+    list-style-type: none;
+    background-color: #eee8d5;
+    margin-bottom: 10px;
+    line-height: 20px;
+}
+.page-container{
+    margin-left: auto;
+    margin-right: auto;
+    width:1140px;
+    overflow:hidden;
+    
+}
+
+/* class childs */
+
+.title span:first-child{
+    color:#2aa198;
+}
+
+.category:hover{
+    background-color: #e2dfcd;
+}

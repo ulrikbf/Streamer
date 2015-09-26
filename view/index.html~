@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <title>wtf</title>
+        
+       <script src="./public/javascript/ajax.js"></script>
+    </head>
+    <body>
+        <div>Something is happening, baby!</div>
+        
+        <a href="/streaming">Something is happening, baby!</a>
+        
+<input id ="test" type="text" name="intext">
+ 
+<span name="name" id="texter"></span>
+        <button onclick="myFunction()">Click me</button>
+    </body>
+</html>
